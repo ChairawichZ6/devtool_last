@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+        
+        stages {
+            stage('Initialize Stage') {
+                steps {
+                    echo 'Initial : Delete containers and images'
+                     dir('devtool_last') {
+                        echo "Current path is  ${pwd()}"
+                        sh 'docker-compose down --rmi all --volumes || true'
+                     }
+                }
+            }
+
+            stage('Build Stage'){
+                steps {
+                    dir('devtool_last') {
+                        echo "Current path is ${pwd()}"
+                        sh "docker-compose build"
+                    }
+                }
+            }
+
+            stage('Push Stage'){
+                steps {
+                    dir('devtool_last') {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                        }
+                        sh 'docker push'
+                    }
+                }
+            }
+            
+            stage('Trigger to slave job'){
+                steps {
+                    build job: 'Slave'
+                }
+            }
+        }
+}
