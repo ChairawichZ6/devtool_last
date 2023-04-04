@@ -34,7 +34,7 @@ pipeline {
             
             stage('Trigger to slave job'){
                 steps {
-                    build job: 'Slave'
+                    build job: 'slave'
                 }
             }
         }
