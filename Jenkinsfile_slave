@@ -12,12 +12,12 @@ pipeline {
             stage('Initialize Stage') {
                 steps {
                     echo 'Initial : Delete containers and images'
-                    sh 'docker stop ${DOCKER_CONTAINER_NAME_FRONTEND} || true'
-                    sh 'docker stop ${DOCKER_CONTAINER_NAME_BACKEND} || true'
-                    sh 'docker rm ${DOCKER_CONTAINER_NAME_FRONTEND} || true'
-                    sh 'docker rm ${DOCKER_CONTAINER_NAME_BACKEND} || true'
-                    sh 'docker rmi ${DOCKER_IMAGE_NAME_FRONTEND} || true'
-                    sh 'docker rmi ${DOCKER_IMAGE_NAME_BACKEND} || true'
+                    sh 'sudo docker stop ${DOCKER_CONTAINER_NAME_FRONTEND} || true'
+                    sh 'sudo docker stop ${DOCKER_CONTAINER_NAME_BACKEND} || true'
+                    sh 'sudo docker rm ${DOCKER_CONTAINER_NAME_FRONTEND} || true'
+                    sh 'sudo docker rm ${DOCKER_CONTAINER_NAME_BACKEND} || true'
+                    sh 'sudo docker rmi ${DOCKER_IMAGE_NAME_FRONTEND} || true'
+                    sh 'sudo docker rmi ${DOCKER_IMAGE_NAME_BACKEND} || true'
                 }
             }
 
@@ -25,8 +25,8 @@ pipeline {
                 steps {
                     dir('devtool_last') {
                         echo "Current path is ${pwd()}"
-                        sh "docker pull ${DOCKER_IMAGE_NAME_BACKEND}"
-                        sh "docker pull ${DOCKER_IMAGE_NAME_FRONTEND}"
+                        sh "sudo docker pull ${DOCKER_IMAGE_NAME_BACKEND}"
+                        sh "sudo docker pull ${DOCKER_IMAGE_NAME_FRONTEND}"
                     }
                 }
             }
@@ -35,8 +35,8 @@ pipeline {
                 steps {
                     dir('devtool_last') {
                         echo "Current path is ${pwd()}"
-                        sh "docker run -d -p 8082:80 --name ${DOCKER_CONTAINER_NAME_BACKEND}  ${DOCKER_IMAGE_NAME_BACKEND}"
-                        sh "docker run -d -p 8081:80 --name ${DOCKER_CONTAINER_NAME_FRONTEND} ${DOCKER_IMAGE_NAME_FRONTEND}"
+                        sh "sudo docker run -d -p 8082:80 --name ${DOCKER_CONTAINER_NAME_BACKEND}  ${DOCKER_IMAGE_NAME_BACKEND}"
+                        sh "sudo docker run -d -p 8081:80 --name ${DOCKER_CONTAINER_NAME_FRONTEND} ${DOCKER_IMAGE_NAME_FRONTEND}"
                     }
                 }
             }

@@ -7,7 +7,7 @@ pipeline {
                     echo 'Initial : Delete containers and images'
                      dir('devtool_last') {
                         echo "Current path is  ${pwd()}"
-                        sh 'docker-compose down --rmi all --volumes || true'
+                        sh 'sudo docker-compose down --rmi all --volumes || true'
                      }
                 }
             }
@@ -16,7 +16,7 @@ pipeline {
                 steps {
                     dir('devtool_last') {
                         echo "Current path is ${pwd()}"
-                        sh "docker-compose build"
+                        sh "sudo docker-compose build"
                     }
                 }
             }
@@ -25,9 +25,9 @@ pipeline {
                 steps {
                     dir('devtool_last') {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                            sh 'sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                         }
-                        sh 'docker push'
+                        sh 'sudo docker push'
                     }
                 }
             }
