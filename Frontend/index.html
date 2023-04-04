@@ -162,31 +162,17 @@ input:focus, textarea:focus {
 </style>
 <body>
     <div id="form-main">
-        <div id="form-div">
-          <form class="form" id="form1">
-            
-            <p class="Firstname">
-              <input name="Firstname" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="FirstName" id="name" />
-            </p>
-            
-            <p class="Lastname">
-                <input name="Lastname" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="LastName" id="name" />
-              </p>
-
-            <p class="id">
-              <input name="Student_ID" type="text" class="validate[required,custom[email]] feedback-input" id="stu_id" placeholder="630700xx" />
-            </p>
-            
-            <label for="myfile">Select a file:</label>
-            <input type="file" class="form-control" name="filename" accept="image/gif, image/jpeg, image/png" name="image" id="file"
+      <div class="form-group">
+        <label>FirstName</label>
+        <input class="form-control" id="Name" placeholder="Name" onchange="input_name(event)">
+        <label>Lastname</label>
+        <input  class="form-control" id="Surname" placeholder="Surname" onchange="input_surname(event)">
+        <label>Student ID</label>
+        <input class="form-control" id="SID" placeholder="63xxxxxx" onchange="input_sid(event)">
+        <label>Select Image to Convert</label>
+        <input type="file" class="form-control" name="filename" accept="image/gif, image/jpeg, image/png" name="image" id="file"
             onchange="convert64(event)">
-            
-            
-            <div class="submit">
-                <button type="button" class="btn btn-primary" onclick="convert()">CONVERT</button>
-              <!-- <div class="ease"></div> -->
-            </div>
-          </form>
+    </div>
         </div>
     <div class="container" style="margin-top: 5%;">
         <div class="row">
